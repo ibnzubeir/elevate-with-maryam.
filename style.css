@@ -1071,4 +1071,37 @@ button:focus-visible {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+} /* =========================================================
+   TIKTOK PREMIUM ICON
+   ========================================================= */
+
+.tiktok-icon {
+    position: relative;
+
+    font-family: Arial, sans-serif;
+    font-size: 1.45rem;
+    font-weight: 900;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111111,
+            #242424
+        );
+
+    border: 1px solid rgba(255,255,255,0.18);
+
+    box-shadow:
+        3px 3px 0 rgba(37, 244, 238, 0.35),
+        -3px -3px 0 rgba(254, 44, 85, 0.25);
+}
+
+.tiktok-link:hover .tiktok-icon {
+    transform: scale(1.08);
+
+    box-shadow:
+        4px 4px 0 rgba(37, 244, 238, 0.45),
+        -4px -4px 0 rgba(254, 44, 85, 0.35);
 }
