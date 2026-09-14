@@ -1,115 +1,87 @@
-```javascript
-/* =====================================================
+/* =========================================================
    ELEVATE WITH MARYAM
-   MAIN JAVASCRIPT
-===================================================== */
+   Website JavaScript
+   ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
-    /* =====================================================
-       1. SMOOTH SCROLLING
-    ===================================================== */
+    /* -------------------------------------------------------
+       SMOOTH SCROLLING
+       ------------------------------------------------------- */
 
-    const navigationLinks = document.querySelectorAll('a[href^="#"]');
+    const navLinks = document.querySelectorAll('a[href^="#"]');
 
-    navigationLinks.forEach(link => {
+    navLinks.forEach(function (link) {
 
-        link.addEventListener("click", event => {
+        link.addEventListener("click", function (event) {
 
-            const targetId = link.getAttribute("href");
+            const targetId = this.getAttribute("href");
 
             if (!targetId || targetId === "#") {
                 return;
             }
 
-            const targetSection = document.querySelector(targetId);
+            const target = document.querySelector(targetId);
 
-            if (targetSection) {
-
+            if (target) {
                 event.preventDefault();
 
-                targetSection.scrollIntoView({
+                target.scrollIntoView({
                     behavior: "smooth",
                     block: "start"
                 });
-
             }
-
         });
-
     });
 
 
-    /* =====================================================
-       2. NAVBAR EFFECT WHEN SCROLLING
-    ===================================================== */
+    /* -------------------------------------------------------
+       NAVBAR SCROLL EFFECT
+       ------------------------------------------------------- */
 
     const navbar = document.querySelector(".navbar");
 
     function updateNavbar() {
 
-        if (!navbar) return;
-
-        if (window.scrollY > 70) {
-
-            navbar.style.background = "rgba(9, 39, 31, 0.97)";
-            navbar.style.backdropFilter = "blur(12px)";
-            navbar.style.webkitBackdropFilter = "blur(12px)";
-            navbar.style.boxShadow =
-                "0 8px 30px rgba(0, 0, 0, 0.12)";
-
-        } else {
-
-            navbar.style.background = "transparent";
-            navbar.style.backdropFilter = "none";
-            navbar.style.webkitBackdropFilter = "none";
-            navbar.style.boxShadow = "none";
-
+        if (!navbar) {
+            return;
         }
 
+        if (window.scrollY > 40) {
+            navbar.style.background = "rgba(250, 247, 239, 0.94)";
+            navbar.style.boxShadow =
+                "0 15px 45px rgba(9, 39, 31, 0.15)";
+        } else {
+            navbar.style.background =
+                "rgba(250, 247, 239, 0.78)";
+            navbar.style.boxShadow =
+                "0 10px 40px rgba(9, 39, 31, 0.10)";
+        }
     }
 
     window.addEventListener("scroll", updateNavbar);
-
     updateNavbar();
 
 
-    /* =====================================================
-       3. SCROLL REVEAL ANIMATIONS
-    ===================================================== */
+    /* -------------------------------------------------------
+       SCROLL REVEAL ANIMATION
+       ------------------------------------------------------- */
 
-    const revealElements = document.querySelectorAll(
-        ".section-heading, " +
-        ".story-image, " +
-        ".story-content, " +
-        ".purpose-card, " +
-        ".believer-card, " +
-        ".product-card, " +
-        ".contact-card, " +
-        ".business-grid > div"
-    );
-
-
-    revealElements.forEach(element => {
-        element.classList.add("fade-in");
-    });
-
+    const revealElements = document.querySelectorAll(".reveal");
 
     if ("IntersectionObserver" in window) {
 
-        const revealObserver = new IntersectionObserver(
-            entries => {
+        const observer = new IntersectionObserver(
+            function (entries, observer) {
 
-                entries.forEach(entry => {
+                entries.forEach(function (entry) {
 
                     if (entry.isIntersecting) {
 
-                        entry.target.classList.add("visible");
+                        entry.target.classList.add("active");
 
-                        revealObserver.unobserve(entry.target);
-
+                        observer.unobserve(entry.target);
                     }
-
                 });
 
             },
@@ -118,194 +90,140 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
-        revealElements.forEach(element => {
-            revealObserver.observe(element);
+        revealElements.forEach(function (element) {
+            observer.observe(element);
         });
 
     } else {
 
-        revealElements.forEach(element => {
-            element.classList.add("visible");
+        revealElements.forEach(function (element) {
+            element.classList.add("active");
         });
-
     }
 
 
-    /* =====================================================
-       4. PRODUCT CARD EFFECT
-    ===================================================== */
+    /* -------------------------------------------------------
+       FEELGREAT PURCHASE / REFERRAL LINKS
+       ------------------------------------------------------- */
 
-    const productCards =
-        document.querySelectorAll(".product-card");
+    const feelGreatLink =
+        "https://ufeelgreat.com/c/1EB5FB";
 
-
-    productCards.forEach(card => {
-
-        card.addEventListener("touchstart", () => {
-
-            card.style.transform = "scale(0.98)";
-
-        });
-
-
-        card.addEventListener("touchend", () => {
-
-            setTimeout(() => {
-
-                card.style.transform = "";
-
-            }, 150);
-
-        });
-
-    });
-
-
-    /* =====================================================
-       5. WHATSAPP LINKS
-    ===================================================== */
-
-    const whatsappLinks =
-        document.querySelectorAll('a[href*="wa.me"]');
-
-
-    whatsappLinks.forEach(link => {
-
-        link.addEventListener("click", () => {
-
-            console.log(
-                "Opening WhatsApp conversation with Maryam."
-            );
-
-        });
-
-    });
-
-
-    /* =====================================================
-       6. FEELGREAT LINKS
-    ===================================================== */
-
-    const feelGreatLinks =
+    const feelGreatButtons =
         document.querySelectorAll(
-            'a[href*="ufeelgreat.com"]'
+            'a[href*="ufeelgreat.com"], .feelgreat-button'
         );
 
+    feelGreatButtons.forEach(function (button) {
 
-    feelGreatLinks.forEach(link => {
+        button.setAttribute("href", feelGreatLink);
+        button.setAttribute("target", "_blank");
+        button.setAttribute("rel", "noopener noreferrer");
 
-        link.addEventListener("click", () => {
+        button.addEventListener("click", function () {
 
             console.log(
-                "Opening the FeelGreat program."
+                "Opening Elevate with Maryam FeelGreat referral page."
             );
 
         });
+    });
+
+
+    /* -------------------------------------------------------
+       WHATSAPP
+       ------------------------------------------------------- */
+
+    const whatsappLink =
+        "https://wa.me/254791973806";
+
+    const whatsappButtons =
+        document.querySelectorAll(
+            'a[href*="wa.me"], .whatsapp-button'
+        );
+
+    whatsappButtons.forEach(function (button) {
+
+        button.setAttribute("href", whatsappLink);
+        button.setAttribute("target", "_blank");
+        button.setAttribute("rel", "noopener noreferrer");
 
     });
 
 
-    /* =====================================================
-       7. IMAGE ERROR HANDLING
-    ===================================================== */
+    /* -------------------------------------------------------
+       BUTTON PRESS EFFECT
+       ------------------------------------------------------- */
 
-    const websiteImages =
-        document.querySelectorAll("img");
+    const buttons = document.querySelectorAll(".btn");
+
+    buttons.forEach(function (button) {
+
+        button.addEventListener("mousedown", function () {
+            button.style.transform = "scale(0.97)";
+        });
+
+        button.addEventListener("mouseup", function () {
+            button.style.transform = "";
+        });
+
+        button.addEventListener("mouseleave", function () {
+            button.style.transform = "";
+        });
+    });
 
 
-    websiteImages.forEach(image => {
+    /* -------------------------------------------------------
+       IMAGE ERROR HANDLING
+       ------------------------------------------------------- */
 
-        image.addEventListener("error", () => {
+    const images = document.querySelectorAll("img");
 
-            console.log(
+    images.forEach(function (image) {
+
+        image.addEventListener("error", function () {
+
+            console.warn(
                 "Image could not be loaded:",
                 image.getAttribute("src")
             );
 
-            image.classList.add("image-error");
-
+            image.style.background = "#f2eadb";
         });
-
     });
 
 
-    /* =====================================================
-       8. CURRENT YEAR
-    ===================================================== */
-
-    const currentYear =
-        new Date().getFullYear();
-
+    /* -------------------------------------------------------
+       CURRENT YEAR
+       ------------------------------------------------------- */
 
     const yearElements =
-        document.querySelectorAll(".current-year");
+        document.querySelectorAll("[data-year]");
 
-
-    yearElements.forEach(element => {
-
-        element.textContent = currentYear;
-
+    yearElements.forEach(function (element) {
+        element.textContent = new Date().getFullYear();
     });
 
 
-    /* =====================================================
-       9. BUTTON PRESS EFFECT
-    ===================================================== */
+    /* -------------------------------------------------------
+       ESCAPE KEY
+       ------------------------------------------------------- */
 
-    const buttons =
-        document.querySelectorAll(
-            ".primary-button, .secondary-button, .nav-button"
-        );
-
-
-    buttons.forEach(button => {
-
-        button.addEventListener("mousedown", () => {
-
-            button.style.transform = "scale(0.97)";
-
-        });
-
-
-        button.addEventListener("mouseup", () => {
-
-            button.style.transform = "";
-
-        });
-
-
-        button.addEventListener("mouseleave", () => {
-
-            button.style.transform = "";
-
-        });
-
-    });
-
-
-    /* =====================================================
-       10. ACCESSIBILITY
-    ===================================================== */
-
-    document.addEventListener("keydown", event => {
+    document.addEventListener("keydown", function (event) {
 
         if (event.key === "Escape") {
-
-            document.activeElement?.blur();
-
+            document.activeElement.blur();
         }
 
     });
 
 
-    /* =====================================================
-       WEBSITE READY
-    ===================================================== */
+    /* -------------------------------------------------------
+       WEBSITE LOADED
+       ------------------------------------------------------- */
 
     console.log(
         "✨ Elevate with Maryam website loaded successfully."
     );
 
 });
-```
